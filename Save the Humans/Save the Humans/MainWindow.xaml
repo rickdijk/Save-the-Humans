@@ -9,11 +9,31 @@
     <Window.Resources>
         <ControlTemplate x:Key="EnemyTemplate" TargetType="{x:Type ContentControl}">
             <Grid>
-                <Ellipse Fill="Red" Height="100" Stroke="Black" Width="100"/>
+                <Ellipse Fill="Gray" Stroke="Black" Height="100" Width="75"/>
+                <Ellipse Fill="Black" Height="35" Stroke="Black" Width="25" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="40,20,70,0" RenderTransformOrigin="0.5,0.5">
+                    <Ellipse.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="10"/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Ellipse.RenderTransform>
+                </Ellipse>
+                <Ellipse Fill="Black" HorizontalAlignment="Center" Height="35" Margin="70,20,40,0" Stroke="Black" VerticalAlignment="Top" Width="25" RenderTransformOrigin="0.5,0.5">
+                    <Ellipse.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform/>
+                            <SkewTransform AngleX="-10"/>
+                            <RotateTransform/>
+                            <TranslateTransform/>
+                        </TransformGroup>
+                    </Ellipse.RenderTransform>
+                </Ellipse>
             </Grid>
         </ControlTemplate>
     </Window.Resources>
-    <Grid Background="Black">
+    <Grid x:Name="grid" Background="Black">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="140"/>
             <ColumnDefinition/>
@@ -24,20 +44,20 @@
             <RowDefinition Height="150"/>
         </Grid.RowDefinitions>
         <Button x:Name="startButton" Content="Start!" HorizontalAlignment="Center" Grid.Row="1" VerticalAlignment="Center" Click="startButton_Click"/>
-        <ProgressBar Grid.Column="1" Grid.Row="1" Height="20"/>
-        <Canvas x:Name="playArea" Grid.ColumnSpan="3">
+        <ProgressBar x:Name="progressBar" Grid.Column="1" Grid.Row="1" Height="20"/>
+        <Canvas x:Name="playArea" Grid.ColumnSpan="3" MouseMove="playArea_MouseMove" MouseLeave="playArea_MouseLeave">
             <Canvas.Background>
                 <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                     <GradientStop Color="#FF48B000" Offset="1"/>
                     <GradientStop Color="#FFA640EE"/>
                 </LinearGradientBrush>
             </Canvas.Background>
-            <StackPanel x:Name="human" Orientation="Vertical">
+            <StackPanel x:Name="human" Orientation="Vertical" MouseDown="human_MouseDown">
                 <Ellipse Fill="White" Height="10" Stroke="Black" Width="10"/>
                 <Rectangle Fill="White" Height="25" Stroke="Black" Width="10" Margin="45,0"/>
             </StackPanel>
             <TextBlock x:Name="gameOverText" Canvas.Left="255" TextWrapping="Wrap" Text="Game Over" Canvas.Top="218" FontFamily="Arial" FontWeight="Bold" FontStyle="Italic" FontSize="100"/>
-            <Rectangle x:Name="target" Height="50" Canvas.Left="766" Stroke="Black" Canvas.Top="396" Width="50" RenderTransformOrigin="0.5,0.5">
+            <Rectangle x:Name="target" Height="50" Canvas.Left="766" Stroke="Black" Canvas.Top="396" Width="50" RenderTransformOrigin="0.5,0.5" MouseEnter="target_MouseEnter">
                 <Rectangle.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
